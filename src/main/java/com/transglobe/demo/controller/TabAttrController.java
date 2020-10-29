@@ -87,18 +87,19 @@ public class TabAttrController {
 		logger.info("*** call createTabAttr() ***");
 		CommonResponse res = new CommonResponse();
 
-		try {
-			int insCnt = tabAttrService.saveTabAttr(tabAttr);
-			if (insCnt == 0) {
-				return new ResponseEntity<>(new CommonResponse(200,
-						"No Data Insert"), HttpStatus.OK);
-			}
-		} catch (Exception e) {
-			logger.error(e.toString());
-			return new ResponseEntity<>(returnErrorResponse("Insert Error"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+//		try {
+			// int insCnt = tabAttrService.saveTabAttr(tabAttr);
+			// if (insCnt == 0) {
+//				return new ResponseEntity<>(new CommonResponse(200,
+//						"No Data Insert"), HttpStatus.OK);
+//			}
+//		} catch (Exception e) {
+//			logger.error(e.toString());
+//			return new ResponseEntity<>(returnErrorResponse("Insert Error"),
+//					HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
 
+		tabAttrService.saveTabAttr(tabAttr);
 		res.setMessage("Insert Success");
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
@@ -127,7 +128,7 @@ public class TabAttrController {
 
 	@DeleteMapping(value = "/tabAttr", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody ResponseEntity<?> deleteTabAttr(
-			@RequestBody	 TabAttr tabAttr) {
+			@RequestBody TabAttr tabAttr) {
 		logger.info("*** call deleteTabAttr() ***");
 		CommonResponse res = new CommonResponse();
 

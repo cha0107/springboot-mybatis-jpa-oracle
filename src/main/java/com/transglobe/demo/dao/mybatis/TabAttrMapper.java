@@ -1,4 +1,4 @@
-package com.transglobe.demo.mapper;
+package com.transglobe.demo.dao.mybatis;
 
 import java.util.List;
 

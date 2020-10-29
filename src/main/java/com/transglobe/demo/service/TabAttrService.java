@@ -10,7 +10,7 @@ public interface TabAttrService {
 
 	List<TabAttr> findAllTabAttr();
 
-	int saveTabAttr(TabAttr tabAttr);
+	TabAttr saveTabAttr(TabAttr tabAttr);
 
 	int modifyTabAttr(TabAttr tabAttr);
 

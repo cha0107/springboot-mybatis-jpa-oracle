@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.transglobe.demo.mapper.TabAttrMapper;
+import com.transglobe.demo.dao.jpa.TabAttrRepository;
 import com.transglobe.demo.model.TabAttr;
+import com.transglobe.demo.dao.mybatis.TabAttrMapper;
 import com.transglobe.demo.service.TabAttrService;
 
 @Service
@@ -16,6 +17,9 @@ public class TableAttrServiceImpl implements TabAttrService {
 
 	@Autowired
 	TabAttrMapper tabAttrMapper;
+	
+	@Autowired
+	TabAttrRepository tabAttrRepository;
 
 	@Override
 	public List<TabAttr> findTabAttrByAttrNo(String attrNo) {
@@ -29,8 +33,8 @@ public class TableAttrServiceImpl implements TabAttrService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public int saveTabAttr(TabAttr tabAttr) {
-		return tabAttrMapper.insertTabAttr(tabAttr);
+	public TabAttr saveTabAttr(TabAttr tabAttr) {
+		return tabAttrRepository.save(tabAttr);
 	}
 
 	@Override
