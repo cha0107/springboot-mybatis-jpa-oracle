@@ -1,7 +1,7 @@
 # Work Team - Spring Boot Example
 
 ## 使用技術
-springboot, maven, mybatis ,oracle
+Spring Boot, Maven, mybatis, Spring Data JPA, Oracle
 
 ## 使用說明
 * 1. oracle jdbc driver因license問題無法直接由POM檔設定後自動下載，改讀project下 resources/lib/ojdbc7.jar檔案，無須另外設定
