@@ -1,4 +1,4 @@
-package com.transglobe.demo.utils;
+package com.transglobe.demo.http.api;
 
 import com.transglobe.demo.constant.ReturnStatus;
 
@@ -7,39 +7,39 @@ public class CommonResponse {
     private Integer code = ReturnStatus.SUCCESS.code();
     private String message = ReturnStatus.SUCCESS.message();
     private Object data;
-    
+
     public Integer getCode() {
-    	return code;
+        return code;
     }
-    
-    
-    
+
+
+
     public void setCode(Integer code) {
-    	this.code = code;
+        this.code = code;
     }
-    
-    
-    
+
+
+
     public String getMessage() {
-    	return message;
+        return message;
     }
-    
-    
-    
+
+
+
     public void setMessage(String message) {
-    	this.message = message;
+        this.message = message;
     }
-    
-    
-    
+
+
+
     public Object getData() {
-    	return data;
+        return data;
     }
-    
-    
-    
+
+
+
     public void setData(Object data) {
-    	this.data = data;
+        this.data = data;
     }
 
     public CommonResponse() {
@@ -72,13 +72,13 @@ public class CommonResponse {
         this.setCode(code);
         this.setMessage(message);
     }
-    
+
     /**
      * @param message
      * @param data
      */
     public CommonResponse(String message, Object data) {
-    	this.setCode(ReturnStatus.SUCCESS.code());
+        this.setCode(ReturnStatus.SUCCESS.code());
         this.setMessage(message);
         this.setData(data);
     }
@@ -96,7 +96,7 @@ public class CommonResponse {
 
 
 
-	@Override
+    @Override
     public String toString() {
         return "CommonResponse{" +
                 "code='" + code + '\'' +

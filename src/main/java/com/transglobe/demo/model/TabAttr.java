@@ -1,39 +1,48 @@
 package com.transglobe.demo.model;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "AD", name="TAB_ATTR")
-public class TabAttr implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+@Table(schema = "AD", name = "TAB_ATTR")
+public class TabAttr implements Serializable {
 
-	@Id
-	@Column(name = "ATTRNO", nullable = false)	
-	private String attrNo;
-	
-	@Column(name = "ATTRNAME") 
-	private String attrName;
+    private static final long serialVersionUID = 1L;
 
-	public String getAttrNo() {
-		return attrNo;
-	}
+    @Id
+    @Column(name = "ATTRNO", nullable = false)
+    private String attrNo;
 
-	public void setAttrNo(String attrNo) {
-		this.attrNo = attrNo;
-	}
+    @Column(name = "ATTRNAME")
+    private String attrName;
 
-	public String getAttrName() {
-		return attrName;
-	}
+    public TabAttr() {
+        super();
+    }
 
-	public void setAttrName(String attrName) {
-		this.attrName = attrName;
-	}
+    public TabAttr(String attrNo, String attrName) {
+        super();
+        this.attrNo = attrNo;
+        this.attrName = attrName;
+    }
+
+    public String getAttrNo() {
+        return attrNo;
+    }
+
+    public void setAttrNo(String attrNo) {
+        this.attrNo = attrNo;
+    }
+
+    public String getAttrName() {
+        return attrName;
+    }
+
+    public void setAttrName(String attrName) {
+        this.attrName = attrName;
+    }
 
 }

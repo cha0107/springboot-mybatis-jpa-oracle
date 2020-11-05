@@ -1,16 +1,16 @@
 package com.transglobe.demo.service;
 
 import java.util.List;
-
+import java.util.Optional;
 import com.transglobe.demo.model.TabAttr;
 
 public interface TabAttrService {
 
-	List<TabAttr> findTabAttrByAttrNo(String attrNo);
+    Optional<TabAttr> findTabAttrByAttrNo(String attrNo);
 
 	List<TabAttr> findAllTabAttr();
-
-	TabAttr saveTabAttr(TabAttr tabAttr);
+	
+	int saveTabAttr(TabAttr tabAttr);
 
 	int modifyTabAttr(TabAttr tabAttr);
 
