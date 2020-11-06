@@ -91,7 +91,7 @@ public class TabAttrControllerTests {
     @Test
     public void testDeleteTabAttr() {
         doReturn(1).when(tabAttrMapper).deleteTabAttrByAttrNo(tabAttr.getAttrNo());
-        ResponseEntity<?> entity = tabAttrController.deleteTabAttr(tabAttr);
+        ResponseEntity<?> entity = tabAttrController.deleteTabAttr(tabAttr.getAttrNo());
 
         assertEquals(HttpStatus.OK, entity.getStatusCode());
     }
@@ -99,7 +99,7 @@ public class TabAttrControllerTests {
     @Test
     public void testDeleteTabAttrNoData() {
         doReturn(0).when(tabAttrMapper).deleteTabAttrByAttrNo(tabAttr.getAttrNo());
-        ResponseEntity<?> entity = tabAttrController.deleteTabAttr(tabAttr);
+        ResponseEntity<?> entity = tabAttrController.deleteTabAttr(tabAttr.getAttrNo());
         CommonResponse response = (CommonResponse) entity.getBody();
 
         assertEquals(HttpStatus.OK, entity.getStatusCode());

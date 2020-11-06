@@ -162,10 +162,7 @@ th {
 			function() {
 				$.ajax({
 					type : "DELETE",
-					url : "/api/tabAttr",
-					contentType : "application/json",
-					data : JSON.stringify($("#condition_form")
-							.serializeObject()),
+					url : "/api/tabAttr/" + $('#attrNo').val(),
 					dataType : "json",
 					beforeSend : function() {
 						if ($("#attrNo").val().length == 0) {
