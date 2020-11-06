@@ -2,6 +2,7 @@ package com.transglobe.demo.controller;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +19,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.transglobe.demo.http.api.CommonResponse;
+
 import com.transglobe.demo.constant.ReturnStatus;
+import com.transglobe.demo.http.api.CommonResponse;
 import com.transglobe.demo.model.TabAttr;
 import com.transglobe.demo.service.TabAttrService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @Controller
 @RequestMapping("/api")
 public class TabAttrController {
@@ -112,13 +116,13 @@ public class TabAttrController {
         }
     }
 
-    @DeleteMapping(value = "/tabAttr", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody ResponseEntity<?> deleteTabAttr(@RequestBody TabAttr tabAttr) {
+    @DeleteMapping(value = "/tabAttr/{attrNo}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody ResponseEntity<?> deleteTabAttr(@PathVariable("attrNo") String attrNo) {
         logger.debug("*** call deleteTabAttr() ***");
         CommonResponse res = new CommonResponse();
 
         try {
-            int delCnt = tabAttrService.deleteTabAttr(tabAttr.getAttrNo());
+            int delCnt = tabAttrService.deleteTabAttr(attrNo);
             if (delCnt == 0) {
                 return new ResponseEntity<>(new CommonResponse(200, "No Data Delete"), HttpStatus.OK);
             }
