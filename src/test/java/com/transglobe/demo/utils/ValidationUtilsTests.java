@@ -2,6 +2,7 @@ package com.transglobe.demo.utils;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import com.transglobe.demo.utils.ValidationUtils;
 
 public class ValidationUtilsTests {
 

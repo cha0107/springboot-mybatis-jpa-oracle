@@ -1,7 +1,7 @@
 package com.transglobe.demo.validation;
 
 import org.junit.Test;
-import com.transglobe.demo.http.error.ValidationError;
+import com.transglobe.demo.exception.ValidationException;
 
 public class FieldValidatorTests {
 
@@ -10,7 +10,7 @@ public class FieldValidatorTests {
         FieldValidator.validateNotNull(100, "testParam");
     }
 
-    @Test(expected = ValidationError.class)
+    @Test(expected = ValidationException.class)
     public void testValidateNotNullValidationError() {
         FieldValidator.validateNotNull(null, "testParam");
     }
@@ -20,7 +20,7 @@ public class FieldValidatorTests {
         FieldValidator.validateNotEmpty("testString", "testParam");
     }
 
-    @Test(expected = ValidationError.class)
+    @Test(expected = ValidationException.class)
     public void testValidateNotEmptyValidationError() {
         FieldValidator.validateNotEmpty("", "testParam");
     }
@@ -30,7 +30,7 @@ public class FieldValidatorTests {
         FieldValidator.validateMinLength("testString", "testParam", 5);
     }
 
-    @Test(expected = ValidationError.class)
+    @Test(expected = ValidationException.class)
     public void testValidateMinLengthValidationError() {
         FieldValidator.validateMinLength("testString", "testParam", 15);
     }
@@ -40,7 +40,7 @@ public class FieldValidatorTests {
         FieldValidator.validateMaxLength("testString", "testParam", 15);
     }
 
-    @Test(expected = ValidationError.class)
+    @Test(expected = ValidationException.class)
     public void testValidateMaxLengthValidationError() {
         FieldValidator.validateMaxLength("testString", "testParam", 5);
     }

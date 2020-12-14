@@ -1,0 +1,10 @@
+spring:
+    profiles: sit
+    datasource:
+        driver-class-name: oracle.jdbc.OracleDriver
+        url: jdbc:oracle:thin:@10.67.70.65:1521/ADPDEV1
+        username: NB
+        password: Adp#20200828
+
+               
+               

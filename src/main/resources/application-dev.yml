@@ -2,6 +2,23 @@ spring:
     profiles: dev
     datasource:
         driver-class-name: oracle.jdbc.OracleDriver
-        url: jdbc:oracle:thin:@10.67.67.17:1521/oratg3
-        username: TG002932
-        password: Cha67902117
+        url: jdbc:oracle:thin:@10.67.70.65/ADPDEV1
+        username: NB
+        password: Adp#20200828
+      
+logging:
+    level: 
+        org:
+            springframework:
+               transaction: DEBUG
+               web:
+                   servlet:
+                       mvc:
+                           method:
+                               annotation:
+                                   RequestMappingHandlerMapping: TRACE
+                        
+                                   
+#debug: true 
+               
+               

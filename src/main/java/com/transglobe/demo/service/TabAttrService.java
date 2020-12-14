@@ -10,9 +10,9 @@ public interface TabAttrService {
 
 	List<TabAttr> findAllTabAttr();
 	
-	int saveTabAttr(TabAttr tabAttr);
+	int createTabAttr(TabAttr tabAttr);
 
-	int modifyTabAttr(TabAttr tabAttr);
+	int updateTabAttr(TabAttr tabAttr);
 
 	int deleteTabAttr(String attrNo);
 }

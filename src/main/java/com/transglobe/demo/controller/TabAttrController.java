@@ -1,15 +1,17 @@
 package com.transglobe.demo.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.Optional;
-
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,15 +20,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.transglobe.demo.constant.ReturnStatus;
-import com.transglobe.demo.http.api.CommonResponse;
+import org.springframework.web.bind.annotation.RestController;
+import com.transglobe.demo.exception.RecordNotFoundException;
+import com.transglobe.demo.http.api.ResultEntity;
 import com.transglobe.demo.model.TabAttr;
 import com.transglobe.demo.service.TabAttrService;
 
+@Api(tags = "TAB_ATTR管理")
 @CrossOrigin(origins = "http://localhost:4200")
-@Controller
+@RestController
+@Validated
 @RequestMapping("/api")
 public class TabAttrController {
     private static Logger logger = org.slf4j.LoggerFactory.getLogger(TabAttrController.class);
@@ -34,103 +37,63 @@ public class TabAttrController {
     @Autowired
     TabAttrService tabAttrService;
 
-    @GetMapping(value = "/")
-    public String index(ModelMap model) {
-        return "index";
-    }
-
-    /**
-     * @param message
-     */
-    private ResponseEntity<?> returnErrorResponse(String message) {
-        CommonResponse res = new CommonResponse();
-        res.setCode(ReturnStatus.ERROR.code());
-        res.setMessage(message);
-        return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @GetMapping(value = "/tabAttr/{attrNo}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody ResponseEntity<?> getTabAttrByAttrNo(@PathVariable("attrNo") String attrNo) {
-        logger.debug("*** call getTabAttrByAttrNo() ***");
-        CommonResponse res = new CommonResponse();
-        try {
-            Optional<TabAttr> tabAttr = tabAttrService.findTabAttrByAttrNo(attrNo);
-            if (tabAttr.isPresent()) {
-                res.setData(tabAttr.get());
-                return new ResponseEntity<>(res, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(new CommonResponse(200, "No Data"), HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            logger.error(e.toString());
-            return new ResponseEntity<>(returnErrorResponse("Query Error"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping(value = "/tabAttr", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody ResponseEntity<?> getAllAttr() {
-        logger.debug("*** call getAllAttr() ***");
-        CommonResponse res = new CommonResponse();
-        try {
-            List<TabAttr> tabAttrData = tabAttrService.findAllTabAttr();
-            res.setData(tabAttrData);
+    @ApiOperation(value = "取得單一TAB_ATTR")
+    @GetMapping(value = "/tabAttr/{attrNo}")
+    public ResponseEntity<Object> findTabAttrByAttrNo(@PathVariable @NotBlank @Size(min = 1, max = 2) String attrNo) {
+        logger.info("*** call findTabAttrByAttrNo() ***");
+        
+        ResultEntity res = new ResultEntity();
+        Optional<TabAttr> tabAttr = tabAttrService.findTabAttrByAttrNo(attrNo);
+        if (tabAttr.isPresent()) {
+            res.setData(tabAttr.get());
             return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e.toString());
-            return new ResponseEntity<>(returnErrorResponse("Query Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            throw new RecordNotFoundException("TabAttr record not found by AttrNo.");
         }
     }
 
-    @PostMapping(value = "/tabAttr", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody ResponseEntity<?> createTabAttr(@RequestBody TabAttr tabAttr) {
-        logger.debug("*** call createTabAttr() ***");
-        CommonResponse res = new CommonResponse();
-        try {
-            int insCnt = tabAttrService.saveTabAttr(tabAttr);
-            if (insCnt == 0) {
-                return new ResponseEntity<>(new CommonResponse(200, "No Data Insert"), HttpStatus.OK);
-            }
-            res.setMessage("Insert Success");
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e.toString());
-            return new ResponseEntity<>(returnErrorResponse("Insert Error"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @ApiOperation(value = "取得TAB_ATTR", notes = "列出所有 TAB_ATTR")
+    @GetMapping(value = "/tabAttr")
+    public ResponseEntity<Object> findAllTabAttr() {
+        logger.info("*** call findAllAttr() ***");
+        
+        ResultEntity res = new ResultEntity();
+        List<TabAttr> tabAttrData = tabAttrService.findAllTabAttr();
+        res.setData(tabAttrData);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/tabAttr", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody ResponseEntity<?> updateTabAttr(@RequestBody TabAttr tabAttr) {
-        logger.debug("*** call updateTabAttr() ***");
-        CommonResponse res = new CommonResponse();
-
-        try {
-            int updCnt = tabAttrService.modifyTabAttr(tabAttr);
-            if (updCnt == 0) {
-                return new ResponseEntity<>(new CommonResponse(200, "No Data Update"), HttpStatus.OK);
-            }
-            res.setMessage("Update Success");
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e.toString());
-            return new ResponseEntity<>(returnErrorResponse("Update Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+    @ApiOperation(value = "新增TAB_ATTR")
+    @PostMapping(value = "/tabAttr")
+    public ResponseEntity<Object> createTabAttr(@RequestBody @Valid TabAttr tabAttr) {
+        logger.info("*** call createTabAttr() ***");
+        int insCnt = tabAttrService.createTabAttr(tabAttr);
+        if (insCnt == 0) {
+            throw new RecordNotFoundException("No Data Insert");
         }
+        return new ResponseEntity<>(new ResultEntity("Insert Success"), HttpStatus.OK);
+    }
+    
+    @ApiOperation(value = "修改TAB_ATTR", notes = "修改TAB_ATTR內容")
+    @PutMapping(value = "/tabAttr/{attrNo}")
+    public ResponseEntity<Object> updateTabAttr(@PathVariable String attrNo, @RequestBody @Valid TabAttr tabAttr) {
+        logger.info("*** call updateTabAttr() ***");
+        int updCnt = tabAttrService.updateTabAttr(tabAttr);
+        if (updCnt == 0) {
+            throw new RecordNotFoundException("No Data Update");
+        }
+        return new ResponseEntity<>(new ResultEntity("Update Success"), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/tabAttr/{attrNo}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody ResponseEntity<?> deleteTabAttr(@PathVariable("attrNo") String attrNo) {
-        logger.debug("*** call deleteTabAttr() ***");
-        CommonResponse res = new CommonResponse();
+    @ApiOperation(value = "刪除TAB_ATTR")
+    @DeleteMapping(value = "/tabAttr/{attrNo}")
+    public ResponseEntity<Object> deleteTabAttr(@PathVariable @NotBlank @Size(min = 1, max = 2) String attrNo) {
+        logger.info("*** call deleteTabAttr() ***");
 
-        try {
-            int delCnt = tabAttrService.deleteTabAttr(attrNo);
-            if (delCnt == 0) {
-                return new ResponseEntity<>(new CommonResponse(200, "No Data Delete"), HttpStatus.OK);
-            }
-            res.setMessage("Delete Success");
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e.toString());
-            return new ResponseEntity<>(returnErrorResponse("Detlete Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        int delCnt = tabAttrService.deleteTabAttr(attrNo);
+        if (delCnt == 0) {
+            throw new RecordNotFoundException("No Data Delete");
         }
+        return new ResponseEntity<>(new ResultEntity("Delete Success"), HttpStatus.OK);
     }
 }
