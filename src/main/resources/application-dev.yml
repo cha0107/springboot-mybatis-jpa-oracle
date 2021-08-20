@@ -2,9 +2,9 @@ spring:
     profiles: dev
     datasource:
         driver-class-name: oracle.jdbc.OracleDriver
-        url: jdbc:oracle:thin:@10.67.70.65/ADPDEV1
-        username: NB
-        password: Adp#20200828
+        url: jdbc:oracle:thin:@//192.168.49.131:1521/ORCLCDB
+        username: ADP
+        password: p@ssw0rd123
       
 logging:
     level: 

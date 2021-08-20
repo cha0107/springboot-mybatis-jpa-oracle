@@ -25,7 +25,7 @@ public class TabAttrServiceImpl implements TabAttrService {
 
 	@Override
 	public List<TabAttr> findAllTabAttr() {
-		return tabAttrRepository.findAll();
+		return tabAttrRepository.findAllByOrderByAttrNoAsc();
 	}
 
 	@Override

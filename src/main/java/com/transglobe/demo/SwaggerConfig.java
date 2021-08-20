@@ -17,7 +17,6 @@ public class SwaggerConfig {
     public Docket docker() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .groupName("NB")
                 .enable(true)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.transglobe.demo.controller"))

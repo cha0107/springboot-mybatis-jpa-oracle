@@ -75,8 +75,8 @@ public class TabAttrController {
     }
     
     @ApiOperation(value = "修改TAB_ATTR", notes = "修改TAB_ATTR內容")
-    @PutMapping(value = "/tabAttr/{attrNo}")
-    public ResponseEntity<Object> updateTabAttr(@PathVariable String attrNo, @RequestBody @Valid TabAttr tabAttr) {
+    @PutMapping(value = "/tabAttr")
+    public ResponseEntity<Object> updateTabAttr(@RequestBody @Valid TabAttr tabAttr) {
         logger.info("*** call updateTabAttr() ***");
         int updCnt = tabAttrService.updateTabAttr(tabAttr);
         if (updCnt == 0) {

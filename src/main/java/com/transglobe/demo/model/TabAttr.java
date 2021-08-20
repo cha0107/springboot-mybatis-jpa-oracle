@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @ApiModel("TAB_ATTR實體類")
 @Entity
-@Table(schema = "NB", name = "TAB_ATTR")
+@Table(schema = "ADP", name = "TAB_ATTR")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TabAttr implements Serializable {
@@ -26,14 +26,14 @@ public class TabAttr implements Serializable {
     @Size(min = 1, max = 2)
     @NotBlank
     @Column(name = "ATTRNO", nullable = false)
-    @JsonProperty("attr_no")
+    @JsonProperty("attrNo")
     private String attrNo;
 
     @ApiModelProperty(value = "ATTRNAME")
     @Size(min = 1, max = 30)
     @NotBlank
     @Column(name = "ATTRNAME")
-    @JsonProperty("attr_name")
+    @JsonProperty("attrName")
     private String attrName;
 
     public TabAttr() {
